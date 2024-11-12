@@ -73,14 +73,13 @@ namespace WpfApp1.Pages
 
 
             var user = db.Авторизация.Where(x => x.login == login && x.password == password).FirstOrDefault();
-            var client = db.Клиент.Where(y=>user.Id_Авторизация==y.id_Авторизация).FirstOrDefault();
             
             if (click == 1)
             {
                 if (user != null)
                 {
-                    MessageBox.Show("Вы вошли под: " + client.Имя.ToString());
-                    LoadPage(user.id_role.ToString(), user);
+                    MessageBox.Show("Вы вошли под: " + user.role.role1.ToString());
+                    LoadPage(user.role.role1.ToString(), user);
                 }
                 else
                 {
@@ -97,8 +96,8 @@ namespace WpfApp1.Pages
             {
                 if (user != null && tbCaptcha.Text == tblCaptcha.Text)
                 {
-                    MessageBox.Show("Вы вошли под: " + client.Имя.ToString());
-                    LoadPage(user.id_role.ToString(), user);
+                    MessageBox.Show("Вы вошли под: " + user.role.role1.ToString());
+                    LoadPage(user.role.role1.ToString(), user);
                 }
                 else
                 {
@@ -121,6 +120,9 @@ namespace WpfApp1.Pages
 
         private void btnEnterGuest_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Вы вошли как гость: ");
+
+            NavigationService.Navigate(new Client(null, null));
 
         }
     }
