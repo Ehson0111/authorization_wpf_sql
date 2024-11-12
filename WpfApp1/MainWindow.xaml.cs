@@ -24,20 +24,24 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-            FrmMain.Navigate(new Autho());
+            fr_content.Content = new Autho();
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
+            fr_content.GoBack();
 
         }
 
-        private void FrmMain_ContentRendered(object sender, EventArgs e)
+    
+
+        private void fr_content_ContentRendered_1(object sender, EventArgs e)
         {
-            if (FrmMain.CanGoBack)
+            if (fr_content.CanGoBack)
                 btnBack.Visibility = Visibility.Visible;
             else
                 btnBack.Visibility = Visibility.Hidden;
+
         }
     }
 }
