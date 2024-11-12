@@ -85,10 +85,10 @@ namespace WpfApp1.Pages
                 {
                     MessageBox.Show("Вы ввели логин или пароль неверно!");
                     GenerateCapctcha();
-                    /*
-                     * Здесь должна быть оичстка поля с паролем
-                     * Вывод капчи
-                     */
+                   
+                    tbLogin.Text = " ";
+                    tbPassword.Text = " ";
+
                 }
             }
 
@@ -102,6 +102,9 @@ namespace WpfApp1.Pages
                 else
                 {
                     MessageBox.Show("Введите данные заново!");
+                    tbLogin.Text = " ";
+                    tbPassword.Text = " ";
+                    tbCaptcha.Text=" ";
                 }
             }
         }
