@@ -41,7 +41,7 @@ namespace WpfApp1.Pages
             n = 0;
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
-           timer.Tick += Timer_Tick;
+            timer.Tick += Timer_Tick;
 
         }
         private void Timer_Tick(object sender, EventArgs e)
@@ -59,7 +59,6 @@ namespace WpfApp1.Pages
                 tbPassword.IsEnabled = true;
                 btnEnterGuest.IsEnabled = true;
                 btnEnter.IsEnabled = true;
-
                 n = 0;
             }
         }
@@ -107,8 +106,6 @@ namespace WpfApp1.Pages
             NavigationService.Navigate(new Client(null,null));
         }
 
-    
- 
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
 
@@ -120,8 +117,6 @@ namespace WpfApp1.Pages
             Helpel helpel = new Helpel();
             password = hash.HashPassword1(password);
             db = new Пр4_Агентсво_недвижимостиEntities();
-
-
 
             var user = db.Авторизация.Where(x => x.login == login && x.password == password).FirstOrDefault();
             
@@ -155,6 +150,8 @@ namespace WpfApp1.Pages
                 {
                     if (n >= 3)
                     {
+                        GenerateCapctcha();
+
                         locked();
                     }
                     else
