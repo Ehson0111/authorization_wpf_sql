@@ -20,6 +20,7 @@ using System.Windows.Navigation;
 using WpfApp1.Services;
 using WpfApp1.Models;
 using System.Data;
+using System.Windows.Threading;
 
 namespace WpfApp1.Pages
 {
@@ -29,19 +30,66 @@ namespace WpfApp1.Pages
     public partial class Autho : Page
     {
         int click;
+         int n;
+        private DispatcherTimer timer;
+        private int timeLeft;
+
         public Autho()
         {
             InitializeComponent();
             click = 0;
+            n = 0;
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+           timer.Tick += Timer_Tick;
+
         }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            timeLeft--;
+            if (timeLeft > 0)
+            {
+                tbTimeLeft.Text = $"Подождите {timeLeft} секунд";
+            }
+            else
+            {
+                timer.Stop(); // Останавливаем таймер
+                tbTimeLeft.Visibility = Visibility.Hidden;
+                tbLogin.IsEnabled = true;
+                tbPassword.IsEnabled = true;
+                btnEnterGuest.IsEnabled = true;
+                btnEnter.IsEnabled = true;
+
+                n = 0;
+            }
+        }
+
 
         private void BtnEnter_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Client(null, null));
 
+
         }
+        private void locked() {
+            MessageBox.Show("Блокировка ");
+
+            tbLogin.IsEnabled=false;
+               tbPassword.IsEnabled = false;
+            btnEnter.IsEnabled = false;
+            btnEnterGuest.IsEnabled = false;
+            tbTimeLeft.Visibility = Visibility.Visible;
+
+            timeLeft = 10;
+            tbTimeLeft.Text = $"Подождите {timeLeft} секунд";
+
+            timer.Start(); // Запускаем таймер
+
+        }
+
         private void GenerateCapctcha()
         {
+
 
                 tbCaptcha.Visibility = Visibility.Visible;
                 tblCaptcha.Visibility = Visibility.Visible;
@@ -65,9 +113,12 @@ namespace WpfApp1.Pages
         {
 
             click += 1;
+            n++;
             string login = tbLogin.Text.Trim();
             string password = tbPassword.Text.Trim();
+            HashPassword hash = new HashPassword();
             Helpel helpel = new Helpel();
+            password = hash.HashPassword1(password);
             db = new Пр4_Агентсво_недвижимостиEntities();
 
 
@@ -81,15 +132,16 @@ namespace WpfApp1.Pages
                     MessageBox.Show("Вы вошли под: " + user.role.role1.ToString());
                     LoadPage(user.role.role1.ToString(), user);
                 }
-                else
-                {
-                    MessageBox.Show("Вы ввели логин или пароль неверно!");
-                    GenerateCapctcha();
-                   
-                    tbLogin.Text = " ";
-                    tbPassword.Text = " ";
+                  
+                    else
+                    {
 
-                }
+                        MessageBox.Show("Вы ввели логин или пароль неверно!");
+                        GenerateCapctcha();
+
+                        tbLogin.Text = " ";
+                        tbPassword.Text = " ";
+                    }
             }
 
             else if (click > 1)
@@ -101,10 +153,19 @@ namespace WpfApp1.Pages
                 }
                 else
                 {
-                    MessageBox.Show("Введите данные заново!");
-                    tbLogin.Text = " ";
-                    tbPassword.Text = " ";
-                    tbCaptcha.Text=" ";
+                    if (n >= 3)
+                    {
+                        locked();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Введите данные заново!");
+                        GenerateCapctcha();
+
+                        tbLogin.Text = " ";
+                        tbPassword.Text = " ";
+                        tbCaptcha.Text = " ";
+                    }
                 }
             }
         }

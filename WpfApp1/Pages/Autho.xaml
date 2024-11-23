@@ -22,6 +22,7 @@
             <TextBlock Text="Пароль"/>
             <TextBox x:Name="tbPassword"/>
             <TextBlock x:Name="tblCaptcha" Text="Капча" Visibility="Hidden"/>
+            <TextBlock x:Name="tbTimeLeft" Width="200" Foreground="Red" Visibility="Visible"/>
             <TextBox x:Name="tbCaptcha" Visibility="Hidden"/>
 
             <TextBlock x:Name="tbTimer"/>
