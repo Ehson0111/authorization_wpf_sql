@@ -41,7 +41,7 @@ namespace WpfApp1.Pages
             n = 0;
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += Timer_Tick;
+            timer.Tick += Timer_Tick; //Каждую секунду будет вызиваться метод
 
         }
         private void Timer_Tick(object sender, EventArgs e)
@@ -53,11 +53,12 @@ namespace WpfApp1.Pages
             }
             else
             {
-                timer.Stop(); // Останавливаем таймер
+                timer.Stop();                // Останавливаем таймер
                 tbTimeLeft.Visibility = Visibility.Hidden;
                 tbLogin.IsEnabled = true;
                 tbPassword.IsEnabled = true;
                 btnEnterGuest.IsEnabled = true;
+                tbCaptcha.IsEnabled = true;
                 btnEnter.IsEnabled = true;
                 n = 0;
             }
@@ -71,14 +72,15 @@ namespace WpfApp1.Pages
 
         }
         private void locked() {
-            MessageBox.Show("Блокировка ");
+            MessageBox.Show("Блокировка: Слишком много неудачных попыток входа.");
 
-            tbLogin.IsEnabled=false;
-               tbPassword.IsEnabled = false;
+            tbLogin.IsEnabled=false; //неактивен
+            tbPassword.IsEnabled = false;
             btnEnter.IsEnabled = false;
             btnEnterGuest.IsEnabled = false;
-            tbTimeLeft.Visibility = Visibility.Visible;
+            tbCaptcha.IsEnabled = false;
 
+            tbTimeLeft.Visibility = Visibility.Visible;
             timeLeft = 10;
             tbTimeLeft.Text = $"Подождите {timeLeft} секунд";
 
@@ -110,7 +112,6 @@ namespace WpfApp1.Pages
         {
 
             click += 1;
-            n++;
             string login = tbLogin.Text.Trim();
             string password = tbPassword.Text.Trim();
             HashPassword hash = new HashPassword();
@@ -136,21 +137,23 @@ namespace WpfApp1.Pages
 
                         tbLogin.Text = " ";
                         tbPassword.Text = " ";
-                    }
+                    tbCaptcha.Text = " ";
+                    n++;
+
+                }
             }
 
             else if (click > 1)
             {
-                if (user != null && tbCaptcha.Text == tblCaptcha.Text)
+                if (user != null && tbCaptcha.Text.Trim() == tblCaptcha.Text.Trim())
                 {
                     MessageBox.Show("Вы вошли под: " + user.role.role1.ToString());
                     LoadPage(user.role.role1.ToString(), user);
                 }
                 else
                 {
-                    if (n >= 3)
+                    if (n >= 3) 
                     {
-                        GenerateCapctcha();
 
                         locked();
                     }
@@ -158,6 +161,8 @@ namespace WpfApp1.Pages
                     {
                         MessageBox.Show("Введите данные заново!");
                         GenerateCapctcha();
+
+                        n++;
 
                         tbLogin.Text = " ";
                         tbPassword.Text = " ";
