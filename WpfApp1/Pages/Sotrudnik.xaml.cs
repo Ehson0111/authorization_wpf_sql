@@ -39,16 +39,7 @@ namespace WpfApp1.Pages
         }
         private void time(dynamic query)
         {
-
-            //Table<Authorization> авторизации = db.GetTable<Authorization>();
-            //Table<Client> клиенты = db.GetTable<Client>();
-
-            //var query = from a in авторизации
-            //            join c in клиенты on a.Id equals c.IdAuthorization
-            //            where a.Id == 18
-            //
-            //      select new { a.Имя, a.Фамилия, a.Id };
-
+ 
 
 
             DateTime currentTime = DateTime.Now;
@@ -59,19 +50,16 @@ namespace WpfApp1.Pages
             {
                 s = "утро";
                 text = $"Доброе {s} !, {query.Имя} {query.Фамилия} ";
-
             }
             else if (currentTime.Hour >= 12 && currentTime.Hour <= 17)
             {
                 s = "день";
                 text = $"Добрый {s} !, {query.Имя} {query.Фамилия} ";
-
             }
             else if (currentTime.Hour >= 17 && currentTime.Hour <= 19)
             {
                 s = "вечер ";
                 text = $"Добрый {s} !, {query.Имя} {query.Фамилия} ";
-
 
             }
 

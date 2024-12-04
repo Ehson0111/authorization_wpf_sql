@@ -173,14 +173,11 @@ namespace WpfApp1.Pages
 
         private bool IsWorkingHours()
         {
-            // Получаем текущее время
             DateTime now = DateTime.Now;
 
-            // Устанавливаем начало и конец рабочего дня
             DateTime startTime = new DateTime(now.Year, now.Month, now.Day, 10, 0, 0);
             DateTime endTime = new DateTime(now.Year, now.Month, now.Day, 19, 0, 0);
 
-            // Проверяем, находится ли текущее время в пределах рабочего диапазона
             return now >= startTime && now <= endTime;
         }
     }
