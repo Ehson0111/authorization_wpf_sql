@@ -30,7 +30,7 @@ namespace WpfApp1
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             fr_content.GoBack();
-
+            
         }
 
     

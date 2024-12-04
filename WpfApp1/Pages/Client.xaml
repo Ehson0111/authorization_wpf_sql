@@ -9,6 +9,6 @@
       Title="Client" Background="White">
 
     <Grid>
-        
+        <Label x:Name="Text1"  Content="Label" HorizontalAlignment="Left" Margin="60,34,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>

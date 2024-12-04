@@ -30,8 +30,8 @@ namespace WpfApp1.Pages
     public partial class Autho : Page
     {
         int click;
-         int n;
-        private DispatcherTimer timer;
+        int n;
+         private DispatcherTimer timer;
         private int timeLeft;
 
         public Autho()
@@ -39,9 +39,10 @@ namespace WpfApp1.Pages
             InitializeComponent();
             click = 0;
             n = 0;
-            timer = new DispatcherTimer();
+             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += Timer_Tick; //Каждую секунду будет вызиваться метод
+
+         timer.Tick += Timer_Tick; //Каждую секунду будет вызиваться метод
 
         }
         private void Timer_Tick(object sender, EventArgs e)
@@ -53,7 +54,7 @@ namespace WpfApp1.Pages
             }
             else
             {
-                timer.Stop();                // Останавливаем таймер
+                timer.Stop();                
                 tbTimeLeft.Visibility = Visibility.Hidden;
                 tbLogin.IsEnabled = true;
                 tbPassword.IsEnabled = true;
@@ -71,20 +72,19 @@ namespace WpfApp1.Pages
 
 
         }
-        private void locked() {
+        private void locked()
+        {
             MessageBox.Show("Блокировка: Слишком много неудачных попыток входа.");
 
-            tbLogin.IsEnabled=false; //неактивен
+            tbLogin.IsEnabled = false;  
             tbPassword.IsEnabled = false;
             btnEnter.IsEnabled = false;
             btnEnterGuest.IsEnabled = false;
             tbCaptcha.IsEnabled = false;
-
             tbTimeLeft.Visibility = Visibility.Visible;
             timeLeft = 10;
             tbTimeLeft.Text = $"Подождите {timeLeft} секунд";
-
-            timer.Start(); // Запускаем таймер
+            timer.Start();  
 
         }
 
@@ -92,20 +92,20 @@ namespace WpfApp1.Pages
         {
 
 
-                tbCaptcha.Visibility = Visibility.Visible;
-                tblCaptcha.Visibility = Visibility.Visible;
+            tbCaptcha.Visibility = Visibility.Visible;
+            tblCaptcha.Visibility = Visibility.Visible;
 
-                string capctchaText = CapthchaGenerator.GenerateCaptchaText(6);
-                tblCaptcha.Text = capctchaText;
-                tblCaptcha.TextDecorations = TextDecorations.Strikethrough;
-          
+            string capctchaText = CapthchaGenerator.GenerateCaptchaText(6);
+            tblCaptcha.Text = capctchaText;
+            tblCaptcha.TextDecorations = TextDecorations.Strikethrough;
+
         }
 
         private static Пр4_Агентсво_недвижимостиEntities db;
 
         private void btnEnterGuests_Click(object sender1, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Client(null,null));
+            NavigationService.Navigate(new Client(null, null));
         }
 
         private void btnEnter_Click(object sender, RoutedEventArgs e)
@@ -120,7 +120,7 @@ namespace WpfApp1.Pages
             db = new Пр4_Агентсво_недвижимостиEntities();
 
             var user = db.Авторизация.Where(x => x.login == login && x.password == password).FirstOrDefault();
-            
+
             if (click == 1)
             {
                 if (user != null)
@@ -128,15 +128,15 @@ namespace WpfApp1.Pages
                     MessageBox.Show("Вы вошли под: " + user.role.role1.ToString());
                     LoadPage(user.role.role1.ToString(), user);
                 }
-                  
-                    else
-                    {
 
-                        MessageBox.Show("Вы ввели логин или пароль неверно!");
-                        GenerateCapctcha();
+                else
+                {
 
-                        tbLogin.Text = " ";
-                        tbPassword.Text = " ";
+                    MessageBox.Show("Вы ввели логин или пароль неверно!");
+                    GenerateCapctcha();
+
+                    tbLogin.Text = " ";
+                     tbPassword.Text = " ";
                     tbCaptcha.Text = " ";
                     n++;
 
@@ -152,18 +152,15 @@ namespace WpfApp1.Pages
                 }
                 else
                 {
-                    if (n >= 3) 
+                    if (n >= 3)
                     {
-
                         locked();
                     }
                     else
                     {
                         MessageBox.Show("Введите данные заново!");
                         GenerateCapctcha();
-
                         n++;
-
                         tbLogin.Text = " ";
                         tbPassword.Text = " ";
                         tbCaptcha.Text = " ";
@@ -172,12 +169,11 @@ namespace WpfApp1.Pages
             }
         }
 
-        private void LoadPage(string _role,Авторизация user)
+        private void LoadPage(string _role, Авторизация user)
         {
             click = 0;
             switch (_role)
             {
-
                 case "Клиент":
                     NavigationService.Navigate(new Client(user, _role));
                     break;
