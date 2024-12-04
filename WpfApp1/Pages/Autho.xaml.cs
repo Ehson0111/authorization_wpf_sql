@@ -1,37 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-
-using WpfApp1.Services;
-using WpfApp1.Models;
-using System.Data;
 using System.Windows.Threading;
+using WpfApp1.Models;
+using WpfApp1.Services;
 
 namespace WpfApp1.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для Autho.xaml
-    /// </summary>
     public partial class Autho : Page
     {
         int click;
         int n;
-         private DispatcherTimer timer;
+        private DispatcherTimer timer;
         private int timeLeft;
 
         public Autho()
@@ -39,12 +21,11 @@ namespace WpfApp1.Pages
             InitializeComponent();
             click = 0;
             n = 0;
-             timer = new DispatcherTimer();
+            timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
-
-         timer.Tick += Timer_Tick; //Каждую секунду будет вызиваться метод
-
+            timer.Tick += Timer_Tick; // Каждую секунду будет вызываться метод
         }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             timeLeft--;
@@ -54,7 +35,7 @@ namespace WpfApp1.Pages
             }
             else
             {
-                timer.Stop();                
+                timer.Stop();
                 tbTimeLeft.Visibility = Visibility.Hidden;
                 tbLogin.IsEnabled = true;
                 tbPassword.IsEnabled = true;
@@ -65,18 +46,22 @@ namespace WpfApp1.Pages
             }
         }
 
-
         private void BtnEnter_Click(object sender, RoutedEventArgs e)
         {
+            if (!IsWorkingHours())
+            {
+                MessageBox.Show("Доступ запрещен. Рабочее время: с 10:00 до 19:00.");
+                return;
+            }
+
             NavigationService.Navigate(new Client(null, null));
-
-
         }
+
         private void locked()
         {
             MessageBox.Show("Блокировка: Слишком много неудачных попыток входа.");
 
-            tbLogin.IsEnabled = false;  
+            tbLogin.IsEnabled = false;
             tbPassword.IsEnabled = false;
             btnEnter.IsEnabled = false;
             btnEnterGuest.IsEnabled = false;
@@ -84,21 +69,17 @@ namespace WpfApp1.Pages
             tbTimeLeft.Visibility = Visibility.Visible;
             timeLeft = 10;
             tbTimeLeft.Text = $"Подождите {timeLeft} секунд";
-            timer.Start();  
-
+            timer.Start();
         }
 
         private void GenerateCapctcha()
         {
-
-
             tbCaptcha.Visibility = Visibility.Visible;
             tblCaptcha.Visibility = Visibility.Visible;
 
             string capctchaText = CapthchaGenerator.GenerateCaptchaText(6);
             tblCaptcha.Text = capctchaText;
             tblCaptcha.TextDecorations = TextDecorations.Strikethrough;
-
         }
 
         private static Пр4_Агентсво_недвижимостиEntities db;
@@ -110,6 +91,11 @@ namespace WpfApp1.Pages
 
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
+            if (!IsWorkingHours())
+            {
+                MessageBox.Show("Доступ запрещен. Рабочее время: с 10:00 до 19:00.");
+                return;
+            }
 
             click += 1;
             string login = tbLogin.Text.Trim();
@@ -128,21 +114,16 @@ namespace WpfApp1.Pages
                     MessageBox.Show("Вы вошли под: " + user.role.role1.ToString());
                     LoadPage(user.role.role1.ToString(), user);
                 }
-
                 else
                 {
-
                     MessageBox.Show("Вы ввели логин или пароль неверно!");
                     GenerateCapctcha();
-
                     tbLogin.Text = " ";
-                     tbPassword.Text = " ";
+                    tbPassword.Text = " ";
                     tbCaptcha.Text = " ";
                     n++;
-
                 }
             }
-
             else if (click > 1)
             {
                 if (user != null && tbCaptcha.Text.Trim() == tblCaptcha.Text.Trim())
@@ -177,17 +158,30 @@ namespace WpfApp1.Pages
                 case "Клиент":
                     NavigationService.Navigate(new Client(user, _role));
                     break;
+
+                case "Сотрудник":
+                    NavigationService.Navigate(new Sotrudnik(user, _role));
+                    break;
             }
         }
 
         private void btnEnterGuest_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Вы вошли как гость: ");
-
             NavigationService.Navigate(new Client(null, null));
+        }
 
+        private bool IsWorkingHours()
+        {
+            // Получаем текущее время
+            DateTime now = DateTime.Now;
+
+            // Устанавливаем начало и конец рабочего дня
+            DateTime startTime = new DateTime(now.Year, now.Month, now.Day, 10, 0, 0);
+            DateTime endTime = new DateTime(now.Year, now.Month, now.Day, 19, 0, 0);
+
+            // Проверяем, находится ли текущее время в пределах рабочего диапазона
+            return now >= startTime && now <= endTime;
         }
     }
-
 }
-
