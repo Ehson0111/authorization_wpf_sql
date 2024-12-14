@@ -1,24 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfApp1.Models;
 
 namespace WpfApp1.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для Sotrudnik.xaml
-    /// </summary>
     public partial class Sotrudnik : Page
     {
         private static Пр4_Агентсво_недвижимостиEntities db;
@@ -27,44 +15,85 @@ namespace WpfApp1.Pages
         {
             InitializeComponent();
             db = new Пр4_Агентсво_недвижимостиEntities();
+
+            // Приветствие
             var authorization = db.Авторизация;
             var sotrudnik = db.Сотрудник;
 
-            var quer = from a in authorization
-                       join c in sotrudnik on a.Id_Авторизация equals c.id_Авторизация
-                       where a.Id_Авторизация == user.Id_Авторизация
-                       select new { c.Имя, c.Фамилия };
+            var userQuery = from a in authorization
+                            join c in sotrudnik on a.Id_Авторизация equals c.id_Авторизация
+                            where a.Id_Авторизация == user.Id_Авторизация
+                            select new { c.Имя, c.Фамилия, c.Отчество, c.Контактные_данные };
 
-            time(quer.First());
+            if (userQuery == null)
+            {
+                if (userQuery.Any())
+                {
+                    var userInfo = userQuery.First();
+                    Text1.Content = GenerateGreeting(userInfo.Имя, userInfo.Фамилия);
+                }
+
+            }
+
+            // Получение сотрудников для DataGrid
+            var employees = db.Сотрудник.Select(c => new
+            {
+                c.Id_Сотрудник, // Добавляем ID для идентификации
+                c.Имя,
+                c.Фамилия,
+                c.Отчество,
+                c.Контактные_данные
+            }).ToList();
+            employeesDataGrid.ItemsSource = employees;
+
         }
-        private void time(dynamic query)
+
+        private string GenerateGreeting(string firstName, string lastName)
         {
- 
-
-
             DateTime currentTime = DateTime.Now;
-            string text = " ";
+            string timeOfDay;
 
-            string s = "";
-            if (currentTime.Hour >= 10 && currentTime.Hour <= 12)
+            if (currentTime.Hour >= 10 && currentTime.Hour < 12)
+                timeOfDay = "утро";
+            else if (currentTime.Hour >= 12 && currentTime.Hour < 17)
+                timeOfDay = "день";
+            else if (currentTime.Hour >= 17 && currentTime.Hour < 19)
+                timeOfDay = "вечер";
+            else
+                timeOfDay = "ночь";
+
+            return $"Доброе {timeOfDay}!, {firstName} {lastName}";
+        }
+
+        private void OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (employeesDataGrid.SelectedItem != null)
             {
-                s = "утро";
-                text = $"Доброе {s} !, {query.Имя} {query.Фамилия} ";
+                var selectedEmployee = employeesDataGrid.SelectedItem as dynamic;
+
+                if (selectedEmployee != null)
+                {
+                    // Передаем только идентификатор сотрудника
+                    int employeeId = selectedEmployee.Id_Сотрудник;
+
+                    // Переходим на страницу редактирования
+                    NavigationService.Navigate(new EditEmployeeForm(employeeId));
+                }
             }
-            else if (currentTime.Hour >= 12 && currentTime.Hour <= 17)
+
+        }
+
+        private void UpdateEmployeesDataGrid()
+        {
+            var updatedEmployees = db.Сотрудник.Select(c => new
             {
-                s = "день";
-                text = $"Добрый {s} !, {query.Имя} {query.Фамилия} ";
-            }
-            else if (currentTime.Hour >= 17 && currentTime.Hour <= 19)
-            {
-                s = "вечер ";
-                text = $"Добрый {s} !, {query.Имя} {query.Фамилия} ";
-
-            }
-
-            Text1.Content = text;
-
+                c.Id_Сотрудник,
+                c.Имя,
+                c.Фамилия,
+                c.Отчество,
+                c.Контактные_данные
+            }).ToList();
+            employeesDataGrid.ItemsSource = updatedEmployees;
         }
     }
 }

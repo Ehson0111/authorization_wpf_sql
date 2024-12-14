@@ -9,6 +9,51 @@
       Title="Client" Background="White">
 
     <Grid>
-        <Label x:Name="Text1"  Content="Label" HorizontalAlignment="Left" Margin="60,34,0,0" VerticalAlignment="Top"/>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="80*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="56"/>
+            <RowDefinition />
+            <RowDefinition Height="60*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0"/>
+
+        <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5,0,5,0"/>
+
+        <ComboBox Name="cmbFilter" Grid.Row="1" Grid.Column="2" SelectedIndex="0"  Margin="5,0,5,0" VerticalAlignment="Center" />
+        <ListView Name="LViewProduct" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Margin="5,5,5,5" d:ItemsSource="{d:SampleData ItemCount=1}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Black" BorderThickness="1" Background="{Binding BackGround}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Width="180" Height="100" Margin="5"/>
+                            <StackPanel Grid.Column="1" Margin="5">
+                                <TextBlock Text="{Binding Фамилия, FallbackValue='Фамилия не найдена'}" FontWeight="Bold" />
+                                <TextBlock Text="{Binding Имя, FallbackValue='Имя не найдено'}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Отчество, FallbackValue='Отчество не найдено'}" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
     </Grid>
 </Page>

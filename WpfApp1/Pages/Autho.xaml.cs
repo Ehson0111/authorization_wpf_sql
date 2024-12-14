@@ -91,11 +91,11 @@ namespace WpfApp1.Pages
 
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsWorkingHours())
+           /* if (!IsWorkingHours())
             {
                 MessageBox.Show("Доступ запрещен. Рабочее время: с 10:00 до 19:00.");
                 return;
-            }
+            }*/
 
             click += 1;
             string login = tbLogin.Text.Trim();
@@ -174,6 +174,8 @@ namespace WpfApp1.Pages
         private bool IsWorkingHours()
         {
             DateTime now = DateTime.Now;
+
+
 
             DateTime startTime = new DateTime(now.Year, now.Month, now.Day, 10, 0, 0);
             DateTime endTime = new DateTime(now.Year, now.Month, now.Day, 19, 0, 0);

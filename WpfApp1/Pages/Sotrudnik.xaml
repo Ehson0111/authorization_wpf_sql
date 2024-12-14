@@ -3,13 +3,23 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WpfApp1.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Client" Background="White">
+      Title="Sotrudnik" Background="White">
 
+    <Grid Margin="0,84,0,0">
+        <!-- Приветствие -->
+        <Label x:Name="Text1" Content="Label" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" FontSize="16" />
 
-    <Grid>
-        <Label x:Name="Text1"  Content="Label" HorizontalAlignment="Left" Margin="60,34,0,0" VerticalAlignment="Top"/>
+        <DataGrid x:Name="employeesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
+          IsReadOnly="True" MouseDoubleClick="OnMouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Имя" Binding="{Binding Имя}" Width="*"/>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding Фамилия}" Width="*"/>
+                <DataGridTextColumn Header="Отчество" Binding="{Binding Отчество}" Width="*"/>
+                <DataGridTextColumn Header="Контактные данные" Binding="{Binding Контактные_данные}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </Page>

@@ -58,6 +58,19 @@ namespace WpfApp1
             _context.SaveChanges(); // Сохранение измененной сущности в БД
         }
 
+        public void UpdateSotrudnik(Сотрудник сотрудник)
+        {
+            // Убедитесь, что контекст инициализирован
+            if (_context == null)
+            {
+                _context = GetContext();
+            }
+
+            // Состояние сущности помечается как Измененная
+            _context.Entry(сотрудник).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges(); // Сохранение измененной сущности в БД
+        }
+
         /// <summary>
         /// Метод для удаления записи о пользователе из таблицы Users базы данных.
         /// </summary>

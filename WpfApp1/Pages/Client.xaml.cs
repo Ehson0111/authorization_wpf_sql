@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using WpfApp1.Models;
@@ -9,10 +10,10 @@ namespace WpfApp1.Pages
     /// Логика взаимодействия для Client.xaml
     /// </summary>
     public partial class Client : Page
-    {  
+    {
         private static Пр4_Агентсво_недвижимостиEntities db;
 
-        public Client(Авторизация user,string role)
+        public Client(Авторизация user, string role)
         {
             InitializeComponent();
             db = new Пр4_Агентсво_недвижимостиEntities();
@@ -22,51 +23,55 @@ namespace WpfApp1.Pages
             var quer = from a in authorization
                        join c in client on a.Id_Авторизация equals c.id_Авторизация
                        where a.Id_Авторизация == user.Id_Авторизация
-                       select new {c.Имя,c.Фамилия };
+                       select new { c.Имя, c.Фамилия };
 
             time(quer.First());
+            var client1=db.Клиент.ToList();
+            LViewProduct.ItemsSource = GetData(); // Заполняем данные
+
         }
+        public class YourDataModel
+        {
+            public string Фамилия { get; set; }
+            public string Имя { get; set; }
+            public string Отчество { get; set; }
+        }
+     
 
-        private void time(dynamic query) {
-
-            //Table<Authorization> авторизации = db.GetTable<Authorization>();
-            //Table<Client> клиенты = db.GetTable<Client>();
-
-            //var query = from a in авторизации
-            //            join c in клиенты on a.Id equals c.IdAuthorization
-            //            where a.Id == 18
-            //
-            //      select new { a.Имя, a.Фамилия, a.Id };
-             
-
+            private List<YourDataModel> GetData()
+            {
+                // Возвращаем коллекцию данных
+                return new List<YourDataModel>
+        {
+            new YourDataModel { Фамилия = "Иванов", Имя = "Иван", Отчество = "Иванович" },
+            new YourDataModel { Фамилия = "Петров", Имя = "Петр", Отчество = "Петрович" }
+        };
+            }
+        
+        private void time(dynamic query)
+        {
 
             DateTime currentTime = DateTime.Now;
             string text = " ";
 
-            string s="";
-            if (currentTime.Hour>=10 && currentTime.Hour<=12  )
+            string s = "";
+            if (currentTime.Hour >= 10 && currentTime.Hour <= 12)
             {
                 s = "утро";
-                  text = $"Доброе {s} !, {query.Имя} {query.Фамилия} ";
-
+                text = $"Доброе {s} !, {query.Имя} {query.Фамилия} ";
             }
-            else if(currentTime.Hour >= 12 && currentTime.Hour <= 17)
+            else if (currentTime.Hour >= 12 && currentTime.Hour <= 17)
             {
-                s = "день";
+                s = "день"; 
                 text = $"Добрый {s} !, {query.Имя} {query.Фамилия} ";
-
             }
-            else if(currentTime.Hour >= 17 && currentTime.Hour <= 19)
+            else if (currentTime.Hour >= 17 && currentTime.Hour <= 19)
             {
                 s = "вечер ";
                 text = $"Добрый {s} !, {query.Имя} {query.Фамилия} ";
-
-
             }
 
-            Text1.Content=text;
-
+            // Text1.Content = text;
         }
-
     }
 }

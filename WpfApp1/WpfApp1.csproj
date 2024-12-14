@@ -118,6 +118,9 @@
     <Compile Include="Models\Услуга.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\EditEmployeeForm.xaml.cs">
+      <DependentUpon>EditEmployeeForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Sotrudnik.xaml.cs">
       <DependentUpon>Sotrudnik.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Client.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EditEmployeeForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
