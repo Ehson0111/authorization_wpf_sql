@@ -12,30 +12,21 @@ namespace WpfApp1.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Клиент
+    public partial class pol
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Клиент()
+        public pol()
         {
-            this.Договор = new HashSet<Договор>();
-            this.Заявка = new HashSet<Заявка>();
+            this.Клиент = new HashSet<Клиент>();
+            this.Сотрудник = new HashSet<Сотрудник>();
         }
     
-        public int Id_Клиент { get; set; }
-        public string Фамилия { get; set; }
-        public string Имя { get; set; }
-        public string Отчество { get; set; }
-        public string Дата_рождение { get; set; }
-        public string Контактные_данные { get; set; }
-        public string Паспортные_данные { get; set; }
-        public Nullable<int> id_Авторизация { get; set; }
-        public Nullable<int> id_pol { get; set; }
+        public int id_pol { get; set; }
+        public string pol1 { get; set; }
     
-        public virtual pol pol { get; set; }
-        public virtual Авторизация Авторизация { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Договор> Договор { get; set; }
+        public virtual ICollection<Клиент> Клиент { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Заявка> Заявка { get; set; }
+        public virtual ICollection<Сотрудник> Сотрудник { get; set; }
     }
 }

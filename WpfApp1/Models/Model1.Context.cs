@@ -25,6 +25,8 @@ namespace WpfApp1.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<dolzhnost> dolzhnost { get; set; }
+        public virtual DbSet<pol> pol { get; set; }
         public virtual DbSet<role> role { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Авторизация> Авторизация { get; set; }
