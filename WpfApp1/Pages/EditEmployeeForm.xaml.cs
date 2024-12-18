@@ -11,76 +11,6 @@ namespace WpfApp1.Pages
         private Пр4_Агентсво_недвижимостиEntities db;
         private int _employeeId;
 
-        //public EditEmployeeForm(int employeeId)
-        //{
-        //    InitializeComponent();
-        //    _employeeId = employeeId;
-        //    db = new Пр4_Агентсво_недвижимостиEntities();
-
-        //    // Загрузка данных сотрудника
-        //    var employee = db.Сотрудник.Find(employeeId);
-        //    if (employee == null)
-        //    {
-        //        MessageBox.Show("Сотрудник не найден!");
-        //        return;
-        //    }
-
-        //    txt(employee);
-        //}
-
-        //private void txt(Сотрудник employee)
-        //{
-        //    // Заполнение полей данными сотрудника
-        //    txtFirstName.Text = employee.Имя;
-        //    txtLastName.Text = employee.Фамилия;
-        //    txtMiddleName.Text = employee.Отчество;
-        //    txtContactDetails.Text = employee.Контактные_данные;
-        //    txtdolzhnost.Text = employee.dolzhnost?.nazvanie; // Проверка на null
-
-        //    // Загрузка данных авторизации
-        //    var auth = db.Авторизация.FirstOrDefault(a => a.Id_Авторизация == employee.id_Авторизация);
-        //    if (auth != null)
-        //    {
-        //        txtlogin.Text = auth.login;
-        //        txtpassword.Text = auth.password;
-        //    }
-        //}
-
-        //private void BtnSave_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var employee = db.Сотрудник.Find(_employeeId);
-        //    if (employee == null)
-        //    {
-        //        MessageBox.Show("Сотрудник не найден!");
-        //        return;
-        //    }
-
-        //    // Обновление данных сотрудника
-        //    employee.Имя = txtFirstName.Text;
-        //    employee.Фамилия = txtLastName.Text;
-        //    employee.Отчество = txtMiddleName.Text;
-        //    employee.Контактные_данные = txtContactDetails.Text;
-
-        //    // Обновление данных авторизации
-        //    var auth = db.Авторизация.FirstOrDefault(a => a.Id_Авторизация == employee.id_Авторизация);
-        //    if (auth != null)
-        //    {
-        //        auth.login = txtlogin.Text;
-        //        auth.password = txtpassword.Text;
-        //    }
-
-        //    // Сохранение изменений в базе данных
-        //    try
-        //    {
-        //        db.SaveChanges();
-        //        MessageBox.Show("Данные успешно сохранены!");
-        //        NavigationService.Navigate(new Sotrudnik(auth, null));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}");
-        //    }
-        //}
         public EditEmployeeForm(int employeeId)
         {
             InitializeComponent();
@@ -95,10 +25,8 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            // Заполнение полей сотрудника
             txt(employee);
 
-            // Загрузка списка должностей
             cbDolzhnost.ItemsSource = db.dolzhnost.ToList();
         }
 
@@ -141,10 +69,10 @@ namespace WpfApp1.Pages
             auth.login = txtlogin.Text;
             HashPassword hash = new HashPassword();
 
-          //  password = hash.HashPassword1(password);
+            //  password = hash.HashPassword1(password);
 
 
-            auth.password =hash.HashPassword1(pbPassword.Password);
+            auth.password = hash.HashPassword1(pbPassword.Password);
 
             // Обновление данных авторизации
             // Сохранение изменений
@@ -173,7 +101,6 @@ namespace WpfApp1.Pages
             txtContactDetails.Text = "";
             txtlogin.Text = "";
             pbPassword.Password = "";
-
         }
     }
 }

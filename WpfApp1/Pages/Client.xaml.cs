@@ -27,7 +27,7 @@ namespace WpfApp1.Pages
 
             time(quer.First());
             var client1=db.Клиент.ToList();
-            LViewProduct.ItemsSource = GetData(); // Заполняем данные
+            LViewProduct.ItemsSource = client1; // Заполняем данные
 
         }
         public class YourDataModel
