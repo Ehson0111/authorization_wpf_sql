@@ -39,7 +39,16 @@ namespace WpfApp1.Pages
             txtLastName.Text = employee.Фамилия;
             txtMiddleName.Text = employee.Отчество;
             txtContactDetails.Text = employee.Контактные_данные;
+
             cbDolzhnost.SelectedValue = employee.id_dolzhnost;
+
+            txtZarplata.Text = employee.Зарплата.ToString();
+
+            dpBirthday.Text = employee.Дата_рождение;
+
+            cbpol.SelectedValue = employee.id_pol;
+
+
 
             // Загрузка данных авторизации
             var auth = db.Авторизация.Where(a => a.Id_Авторизация == employee.id_Авторизация).FirstOrDefault();
@@ -64,11 +73,12 @@ namespace WpfApp1.Pages
             employee.Фамилия = txtLastName.Text;
             employee.Отчество = txtMiddleName.Text;
             employee.Контактные_данные = txtContactDetails.Text;
+            employee.Зарплата = Convert.ToDecimal(txtZarplata.Text);
             employee.id_dolzhnost = (int?)cbDolzhnost.SelectedValue;
+            employee.id_pol = (int?)cbpol.SelectedValue;
             //employee.Авторизация.password=Tb
             var auth = db.Авторизация.Where(a => a.Id_Авторизация == employee.id_Авторизация).FirstOrDefault();
-
-
+  
             auth.login = txtlogin.Text;
 
             //  password = hash.HashPassword1(password);
@@ -139,8 +149,25 @@ namespace WpfApp1.Pages
             //   catch (Exception ex)
             //   {
             //       MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}");
+
             //   }
-            //   auth.password = hash.HashPassword1(pbPassword.Password);
+            ////   auth.password = hash.HashPassword1(pbPassword.Password);
+            ///
+            ///
+            //employee.Имя = txtFirstName.Text;
+            //employee.Фамилия = txtLastName.Text;
+            //employee.Отчество = txtMiddleName.Text;
+            //employee.Контактные_данные = txtContactDetails.Text;
+            //employee.id_dolzhnost = (int?)cbDolzhnost.SelectedValue;
+            ////employee.Авторизация.password=Tb
+            //var auth = db.Авторизация.Where(a => a.Id_Авторизация == employee.id_Авторизация).FirstOrDefault();
+
+
+            //auth.login = txtlogin.Text;
+
+            ////  password = hash.HashPassword1(password);
+
+
             try
             {
 
@@ -150,24 +177,31 @@ namespace WpfApp1.Pages
                 {
                     Фамилия = txtLastName.Text,
                     Имя = txtFirstName.Text,
-                    Отчество= txtMiddleName.Text,
-                    Зарплата=,
-                    Дата_рождение=,
-                    Контактные_данные= txtContactDetails.Text,
-                    паспортные_данные,
-                    id_dolzhnost,
-                    id_pol
+                    Отчество = txtMiddleName.Text,
+                    Контактные_данные = txtContactDetails.Text,
+                    id_dolzhnost=(int?)cbDolzhnost.SelectedIndex,
+                    Дата_рождение=dpBirthday.Text,
+                   Зарплата= Convert.ToDecimal(txtZarplata.Text),
+                   id_pol=(int)cbpol.SelectedIndex,
+
+
+
+                    //Зарплата=,
+                    // Дата_рождение=,
+                    //Контактные_данные= txtContactDetails.Text,
+                    //паспортные_данные,            employee.Зарплата = Convert.ToInt64(txtZarplata);
+
+                    //id_pol
 
                 };
+
+
                 Авторизация auth = new Авторизация
                 {
                     login = login1,
                     password = parol,
-                 
-
                     id_role = 2 ,
                   
-
                 };
                 helpel.CreateAuthorization(auth);
 
