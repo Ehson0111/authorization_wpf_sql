@@ -40,6 +40,31 @@ namespace WpfApp1
             _context.Клиент.Add(user); // Добавление записи нового пользователя в таблицу Users
             _context.SaveChanges(); // Сохранение изменений в БД
         }
+        public void CreateSotrudnik(Сотрудник user)
+        {
+            // Убедитесь, что контекст инициализирован
+            if (_context == null)
+            {
+                _context = GetContext();
+            }
+
+            _context.Сотрудник.Add(user); // Добавление записи нового пользователя в таблицу Users
+            _context.SaveChanges(); // Сохранение изменений в БД
+        }
+
+        public void CreateAuthorization(Авторизация auth)
+        {
+            // Убедитесь, что контекст инициализирован
+            if (_context == null)
+            {
+                _context = GetContext();
+            }
+
+
+            _context.Авторизация.Add(auth); // Добавление записи нового пользователя в таблицу Users
+            _context.SaveChanges(); // Сохранение изменений в БД
+
+        }
 
         /// <summary>
         /// Метод для обновления записи о пользователе в таблице Users базы данных.
@@ -55,19 +80,6 @@ namespace WpfApp1
 
             // Состояние сущности помечается как Измененная
             _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            _context.SaveChanges(); // Сохранение измененной сущности в БД
-        }
-
-        public void UpdateSotrudnik(Сотрудник сотрудник)
-        {
-            // Убедитесь, что контекст инициализирован
-            if (_context == null)
-            {
-                _context = GetContext();
-            }
-
-            // Состояние сущности помечается как Измененная
-            _context.Entry(сотрудник).State = System.Data.Entity.EntityState.Modified;
             _context.SaveChanges(); // Сохранение измененной сущности в БД
         }
 
@@ -87,6 +99,20 @@ namespace WpfApp1
             var users = _context.Клиент.Find(idUser); // Поиск записи пользователя по его id
             _context.Клиент.Remove(users); // Удаление записи найденного пользователя
             _context.SaveChanges(); // Сохранение изменений в БД
+        }
+
+        public int GetLastAuthorizationId()
+        {
+            if (_context == null)
+            {
+                _context = GetContext();
+            }
+            var lastAuth = _context.Авторизация.OrderByDescending(a => a.Id_Авторизация).FirstOrDefault();
+            if (lastAuth != null)
+            {
+                return lastAuth.Id_Авторизация;
+            }
+            throw new InvalidOperationException("Таблица Авторизация пуста.");
         }
 
         /// <summary>
@@ -118,11 +144,5 @@ namespace WpfApp1
 
             return _context.Клиент.OrderBy(x => x.Имя).ToList();
         }
-
-        /// <summary>
-        /// Получает тип пользователя из связанной таблицы Types.
-        /// </summary>
-        /// <param name="user">Объект пользователя, содержащий информацию о типе.</param>
-        /// <returns>Название типа пользователя.</returns>
     }
 }

@@ -10,6 +10,9 @@ namespace WpfApp1.Pages
     {
         private Пр4_Агентсво_недвижимостиEntities db;
         private int _employeeId;
+        HashPassword hash = new HashPassword();
+        Helpel helpel = new Helpel();
+
 
         public EditEmployeeForm(int employeeId)
         {
@@ -67,7 +70,6 @@ namespace WpfApp1.Pages
 
 
             auth.login = txtlogin.Text;
-            HashPassword hash = new HashPassword();
 
             //  password = hash.HashPassword1(password);
 
@@ -101,6 +103,84 @@ namespace WpfApp1.Pages
             txtContactDetails.Text = "";
             txtlogin.Text = "";
             pbPassword.Password = "";
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //"   var employee = db.Сотрудник.Find(_employeeId);
+
+            //   // Обновление данных сотрудника
+            //   employee.Имя = txtFirstName.Text;
+            //   employee.Фамилия = txtLastName.Text;
+            //   employee.Отчество = txtMiddleName.Text;
+            //   employee.Контактные_данные = txtContactDetails.Text;
+            //   employee.id_dolzhnost = (int?)cbDolzhnost.SelectedValue;
+            //   //employee.Авторизация.password=Tb
+            //   var auth = db.Авторизация.Where(a => a.Id_Авторизация == employee.id_Авторизация).FirstOrDefault();
+
+            //   var Cotrudnik = db.Сотрудник;
+
+            //   auth.login = txtlogin.Text;
+            //   HashPassword hash = new HashPassword();
+
+            //   //  password = hash.HashPassword1(password);
+
+
+            //   auth.password = hash.HashPassword1(pbPassword.Password);
+
+            //   // Обновление данных авторизации
+            //   // Сохранение изменений
+            //   try
+            //   {
+            //       db.SaveChanges();
+            //       MessageBox.Show("Данные успешно сохранены!");
+            //       NavigationService.Navigate(new Sotrudnik(auth, null));
+            //   }
+            //   catch (Exception ex)
+            //   {
+            //       MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}");
+            //   }
+            //   auth.password = hash.HashPassword1(pbPassword.Password);
+            try
+            {
+
+                string parol = hash.HashPassword1(pbPassword.Password);
+                string login1 = txtlogin.Text;
+                Сотрудник newSotrudnik = new Сотрудник
+                {
+                    Фамилия = txtLastName.Text,
+                    Имя = txtFirstName.Text,
+                    Отчество= txtMiddleName.Text,
+                    Зарплата=,
+                    Дата_рождение=,
+                    Контактные_данные= txtContactDetails.Text,
+                    паспортные_данные,
+                    id_dolzhnost,
+                    id_pol
+
+                };
+                Авторизация auth = new Авторизация
+                {
+                    login = login1,
+                    password = parol,
+                 
+
+                    id_role = 2 ,
+                  
+
+                };
+                helpel.CreateAuthorization(auth);
+
+                var authId = helpel.GetLastAuthorizationId();
+                newSotrudnik.id_Авторизация = authId;
+                helpel.CreateSotrudnik(newSotrudnik);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}");
+
+            }
         }
     }
 }

@@ -45,15 +45,31 @@
                             </Grid.ColumnDefinitions>
                             <Image Width="180" Height="100" Margin="5"/>
                             <StackPanel Grid.Column="1" Margin="5">
-                                <TextBlock Text="{Binding Фамилия, FallbackValue='Фамилия не найдена'}" FontWeight="Bold" />
-                                <TextBlock Text="{Binding Имя, FallbackValue='Имя не найдено'}" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Отчество, FallbackValue='Отчество не найдено'}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Тип_жилья}" FontWeight="Bold" />
+                                <TextBlock>
+                                <Run Text="Общая площадь: "/>
+                                  <Run Text="{Binding Общая_площадь}"/>
+                                </TextBlock>
+
+                                <TextBlock>
+                                    <Run Text="Адресс: "/>
+                                     <Run Text="{Binding Адресс }"/>
+                                </TextBlock>
+
                             </StackPanel>
+
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="423,5,0,5" Width="146" Grid.ColumnSpan="2">
+                                <Run Text="Цена:"/>
+                                <Run Text="{Binding Стоимость}"/>
+
+                            </TextBlock>
+
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Label x:Name="Text1" Content="Label" HorizontalAlignment="Left" Margin="45,-10,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Page>

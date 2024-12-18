@@ -61,8 +61,10 @@
                Source="pack://application:,,,/Resources/logo1.jpg"/>
 
         <!-- Кнопка сохранить -->
-        <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center"
+        <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Width="339"
                     >
+            <Button   Content="Добавить" Click="Button_Click" 
+    Margin="5" HorizontalAlignment="Left" Width="97" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
 
             <Button   Content="Сохранить" Click="BtnSave_Click" 
                 Margin="5" HorizontalAlignment="Left" Width="97" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>

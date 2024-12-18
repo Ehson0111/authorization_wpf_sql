@@ -26,27 +26,11 @@ namespace WpfApp1.Pages
                        select new { c.Имя, c.Фамилия };
 
             time(quer.First());
-            var client1=db.Клиент.ToList();
-            LViewProduct.ItemsSource = client1; // Заполняем данные
+            var Ned = db.Недвижимость.ToList();
+
+            LViewProduct.ItemsSource = Ned; // Заполняем данные
 
         }
-        public class YourDataModel
-        {
-            public string Фамилия { get; set; }
-            public string Имя { get; set; }
-            public string Отчество { get; set; }
-        }
-     
-
-            private List<YourDataModel> GetData()
-            {
-                // Возвращаем коллекцию данных
-                return new List<YourDataModel>
-        {
-            new YourDataModel { Фамилия = "Иванов", Имя = "Иван", Отчество = "Иванович" },
-            new YourDataModel { Фамилия = "Петров", Имя = "Петр", Отчество = "Петрович" }
-        };
-            }
         
         private void time(dynamic query)
         {
@@ -71,7 +55,7 @@ namespace WpfApp1.Pages
                 text = $"Добрый {s} !, {query.Имя} {query.Фамилия} ";
             }
 
-            // Text1.Content = text;
+              Text1.Content = text;
         }
     }
 }
