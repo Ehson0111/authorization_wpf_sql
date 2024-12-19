@@ -68,7 +68,7 @@
 
         <!-- Поле для пола -->
         <Label Grid.Row="8" Grid.Column="0" Content="Пол:" VerticalAlignment="Center" Foreground="#FF1D869A"/>
-        <ComboBox Grid.Row="8" Grid.Column="1" x:Name="cbpol" DisplayMemberPath="pol" SelectedValuePath="id_pol" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
+        <ComboBox Grid.Row="8" Grid.Column="1" x:Name="cbpol" DisplayMemberPath="pol1" SelectedValuePath="id_pol" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
 
         <!-- Изображение -->
         <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" 

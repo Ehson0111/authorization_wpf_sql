@@ -50,6 +50,7 @@ namespace WpfApp1
 
             _context.Сотрудник.Add(user); // Добавление записи нового пользователя в таблицу Users
             _context.SaveChanges(); // Сохранение изменений в БД
+
         }
 
         public void CreateAuthorization(Авторизация auth)
@@ -62,8 +63,8 @@ namespace WpfApp1
 
 
             _context.Авторизация.Add(auth); // Добавление записи нового пользователя в таблицу Users
-            _context.SaveChanges(); // Сохранение изменений в БД
 
+            _context.SaveChanges(); // Сохранение изменений в БД
         }
 
         /// <summary>

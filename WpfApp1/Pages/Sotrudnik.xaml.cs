@@ -24,8 +24,8 @@ namespace WpfApp1.Pages
                             join c in sotrudnik on a.Id_Авторизация equals c.id_Авторизация
                             where a.Id_Авторизация == user.Id_Авторизация
                             select new { c.Имя, c.Фамилия, c.Отчество, c.Контактные_данные };
-            var userInfo = userQuery.First();
-            Text1.Content = GenerateGreeting(userInfo.Имя, userInfo.Фамилия);
+   //         var userInfo = userQuery.First();
+     //       Text1.Content = GenerateGreeting(userInfo.Имя, userInfo.Фамилия);
             //if (userQuery == null)
             //{
             //    if (userQuery.Any())
