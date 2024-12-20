@@ -8,6 +8,8 @@ namespace WpfApp1.Pages
 {
     public partial class EditEmployeeForm : Page
     {
+        private ListBox listBox;
+
         private Пр4_Агентсво_недвижимостиEntities db;
         private int _employeeId;
         HashPassword hash = new HashPassword();
@@ -36,6 +38,8 @@ namespace WpfApp1.Pages
 
         private void txt(Сотрудник employee)
         {
+            //cmbSorting
+    
             txtFirstName.Text = employee.Имя;
             txtLastName.Text = employee.Фамилия;
             txtMiddleName.Text = employee.Отчество;
@@ -110,7 +114,7 @@ namespace WpfApp1.Pages
             txtContactDetails.Text = "";
             txtlogin.Text = "";
             pbPassword.Password = "";
-            txtZarplata.Text=0.ToString();
+            txtZarplata.Text = 0.ToString();
             dpBirthday.Text = "";
         }
 
@@ -128,7 +132,7 @@ namespace WpfApp1.Pages
                 id_dolzhnost = (int?)cbDolzhnost.SelectedValue,
                 Дата_рождение = dpBirthday.Text,
                 Зарплата = Convert.ToDecimal(txtZarplata.Text),
-                id_pol=(int)cbpol.SelectedValue,
+                id_pol = (int)cbpol.SelectedValue,
 
             };
 

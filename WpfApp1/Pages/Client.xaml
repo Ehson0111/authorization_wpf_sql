@@ -25,10 +25,13 @@
 
         <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0"/>
 
-        <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5,0,5,0"/>
-
+        <ComboBox   Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5,0,5,0" SelectionChanged="cmbSorting_SelectionChanged">
+            <ComboBoxItem>Без сортировать</ComboBoxItem>
+            <ComboBoxItem>Возрастиание</ComboBoxItem>
+            <ComboBoxItem>Убывание</ComboBoxItem>
+        </ComboBox>
         <ComboBox Name="cmbFilter" Grid.Row="1" Grid.Column="2" SelectedIndex="0"  Margin="5,0,5,0" VerticalAlignment="Center" />
-        <ListView Name="LViewProduct" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Margin="5,5,5,10" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.RowSpan="2">
+        <ListView Name="LViewProduct" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Margin="5,5,5,10" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.RowSpan="2" SelectionChanged="LViewProduct_SelectionChanged">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -40,11 +43,11 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="200"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="171"/>
                             </Grid.ColumnDefinitions>
-                            <Image Width="180" Height="100" Margin="5"/>
-                            <StackPanel Grid.Column="1" Margin="5">
+                            <Image Width="180" Height="100" Margin="10,5,10,5"/>
+                            <StackPanel Grid.Column="1" Margin="5,5,5,5">
                                 <TextBlock Text="{Binding Тип_жилья}" FontWeight="Bold" />
                                 <TextBlock>
                                 <Run Text="Общая площадь: "/>
@@ -58,7 +61,7 @@
 
                             </StackPanel>
 
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="423,5,0,5" Width="146" Grid.ColumnSpan="2">
+                            <TextBlock Grid.Column="2" HorizontalAlignment="Center" Margin="0,5,0,5" Width="146" VerticalAlignment="Center" >
                                 <Run Text="Цена:"/>
                                 <Run Text="{Binding Стоимость}"/>
 
@@ -70,6 +73,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <Label x:Name="Text1" Content="Label" HorizontalAlignment="Left" Margin="45,-10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblCount" Grid.Column="3" Content="Label" HorizontalAlignment="Left" Margin="24,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
 
     </Grid>
 </Page>
