@@ -94,6 +94,9 @@
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tip_zhilya.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Авторизация.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

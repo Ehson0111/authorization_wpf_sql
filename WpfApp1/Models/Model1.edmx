@@ -36,6 +36,13 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="tip_zhilya">
+          <Key>
+            <PropertyRef Name="id_tip_zhilya" />
+          </Key>
+          <Property Name="id_tip_zhilya" Type="int" Nullable="false" />
+          <Property Name="tip_zhilya" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Авторизация">
           <Key>
             <PropertyRef Name="Id Авторизация" />
@@ -95,18 +102,17 @@
           </Key>
           <Property Name="Id Недвижимости" Type="int" Nullable="false" />
           <Property Name="Id Клиент" Type="int" Nullable="false" />
+          <Property Name="id_tip_zhilya" Type="int" />
           <Property Name="Стоимость" Type="varchar" MaxLength="20" />
-          <Property Name="Адресс" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="Этаж" Type="varchar" MaxLength="8" Nullable="false" />
-          <Property Name="Номер квартиры" Type="varchar" MaxLength="8" Nullable="false" />
-          <Property Name="[Тип недвижимости" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Общая площадь" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="Тип жилья" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Высота потолков" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Вид из окна" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Количество ливтов" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Год сдачи" Type="int" Nullable="false" />
-          <Property Name="Парковка" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Адресс" Type="varchar" MaxLength="30" />
+          <Property Name="Этаж" Type="varchar" MaxLength="8" />
+          <Property Name="Номер квартиры" Type="varchar" MaxLength="8" />
+          <Property Name="Общая площадь" Type="varchar" MaxLength="15" />
+          <Property Name="Высота потолков" Type="varchar" MaxLength="50" />
+          <Property Name="Вид из окна" Type="varchar" MaxLength="50" />
+          <Property Name="Количество ливтов" Type="varchar" MaxLength="50" />
+          <Property Name="Год сдачи" Type="int" />
+          <Property Name="Парковка" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Отчетности">
           <Key>
@@ -275,6 +281,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Недвижимость_tip_zhilya">
+          <End Role="tip_zhilya" Type="Self.tip_zhilya" Multiplicity="0..1" />
+          <End Role="Недвижимость" Type="Self.Недвижимость" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tip_zhilya">
+              <PropertyRef Name="id_tip_zhilya" />
+            </Principal>
+            <Dependent Role="Недвижимость">
+              <PropertyRef Name="id_tip_zhilya" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Недвижимость_Собственник">
           <End Role="Собственник" Type="Self.Собственник" Multiplicity="1" />
           <End Role="Недвижимость" Type="Self.Недвижимость" Multiplicity="*" />
@@ -311,7 +329,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Сотрудник_pol">
+        <Association Name="FK_Сотрудник_pol1">
           <End Role="pol" Type="Self.pol" Multiplicity="0..1" />
           <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="*" />
           <ReferentialConstraint>
@@ -340,6 +358,7 @@
           <EntitySet Name="pol" EntityType="Self.pol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tip_zhilya" EntityType="Self.tip_zhilya" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Авторизация" EntityType="Self.Авторизация" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Договор" EntityType="Self.Договор" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Допольнительние услуги" EntityType="Self.Допольнительние услуги" Schema="dbo" store:Type="Tables" />
@@ -390,6 +409,10 @@
             <End Role="Авторизация" EntitySet="Авторизация" />
             <End Role="Клиент" EntitySet="Клиент" />
           </AssociationSet>
+          <AssociationSet Name="FK_Недвижимость_tip_zhilya" Association="Self.FK_Недвижимость_tip_zhilya">
+            <End Role="tip_zhilya" EntitySet="tip_zhilya" />
+            <End Role="Недвижимость" EntitySet="Недвижимость" />
+          </AssociationSet>
           <AssociationSet Name="FK_Недвижимость_Собственник" Association="Self.FK_Недвижимость_Собственник">
             <End Role="Собственник" EntitySet="Собственник" />
             <End Role="Недвижимость" EntitySet="Недвижимость" />
@@ -402,7 +425,7 @@
             <End Role="dolzhnost" EntitySet="dolzhnost" />
             <End Role="Сотрудник" EntitySet="Сотрудник" />
           </AssociationSet>
-          <AssociationSet Name="FK_Сотрудник_pol" Association="Self.FK_Сотрудник_pol">
+          <AssociationSet Name="FK_Сотрудник_pol1" Association="Self.FK_Сотрудник_pol1">
             <End Role="pol" EntitySet="pol" />
             <End Role="Сотрудник" EntitySet="Сотрудник" />
           </AssociationSet>
@@ -431,7 +454,7 @@
           <Property Name="id_pol" Type="Int32" Nullable="false" />
           <Property Name="pol1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Клиент" Relationship="Self.FK_Клиент_pol" FromRole="pol" ToRole="Клиент" />
-          <NavigationProperty Name="Сотрудник" Relationship="Self.FK_Сотрудник_pol" FromRole="pol" ToRole="Сотрудник" />
+          <NavigationProperty Name="Сотрудник" Relationship="Self.FK_Сотрудник_pol1" FromRole="pol" ToRole="Сотрудник" />
         </EntityType>
         <EntityType Name="role">
           <Key>
@@ -450,6 +473,14 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tip_zhilya">
+          <Key>
+            <PropertyRef Name="id_tip_zhilya" />
+          </Key>
+          <Property Name="id_tip_zhilya" Type="Int32" Nullable="false" />
+          <Property Name="tip_zhilya1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Недвижимость" Relationship="Self.FK_Недвижимость_tip_zhilya" FromRole="tip_zhilya" ToRole="Недвижимость" />
         </EntityType>
         <EntityType Name="Авторизация">
           <Key>
@@ -525,18 +556,18 @@
           </Key>
           <Property Name="Id_Недвижимости" Type="Int32" Nullable="false" />
           <Property Name="Id_Клиент" Type="Int32" Nullable="false" />
+          <Property Name="id_tip_zhilya" Type="Int32" />
           <Property Name="Стоимость" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Адресс" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Этаж" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Номер_квартиры" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="C_Тип_недвижимости" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Общая_площадь" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Тип_жилья" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Высота_потолков" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Вид_из_окна" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Количество_ливтов" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Год_сдачи" Type="Int32" Nullable="false" />
-          <Property Name="Парковка" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Адресс" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Этаж" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Номер_квартиры" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Общая_площадь" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Высота_потолков" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Вид_из_окна" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Количество_ливтов" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Год_сдачи" Type="Int32" />
+          <Property Name="Парковка" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tip_zhilya" Relationship="Self.FK_Недвижимость_tip_zhilya" FromRole="Недвижимость" ToRole="tip_zhilya" />
           <NavigationProperty Name="Заявка" Relationship="Self.FK_Заявка_Недвижимость" FromRole="Недвижимость" ToRole="Заявка" />
           <NavigationProperty Name="Собственник" Relationship="Self.FK_Недвижимость_Собственник" FromRole="Недвижимость" ToRole="Собственник" />
         </EntityType>
@@ -581,7 +612,7 @@
           <Property Name="Контактные_данные" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="паспортные_данные" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="dolzhnost" Relationship="Self.FK_Сотрудник_dolzhnost" FromRole="Сотрудник" ToRole="dolzhnost" />
-          <NavigationProperty Name="pol" Relationship="Self.FK_Сотрудник_pol" FromRole="Сотрудник" ToRole="pol" />
+          <NavigationProperty Name="pol" Relationship="Self.FK_Сотрудник_pol1" FromRole="Сотрудник" ToRole="pol" />
           <NavigationProperty Name="Авторизация" Relationship="Self.FK_Сотрудник_Авторизация" FromRole="Сотрудник" ToRole="Авторизация" />
           <NavigationProperty Name="Заявка" Relationship="Self.FK_Заявка_Сотрудник" FromRole="Сотрудник" ToRole="Заявка" />
           <NavigationProperty Name="Отчетности" Relationship="Self.FK_Отчетности_Сотрудник1" FromRole="Сотрудник" ToRole="Отчетности" />
@@ -620,7 +651,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Сотрудник_pol">
+        <Association Name="FK_Сотрудник_pol1">
           <End Role="pol" Type="Self.pol" Multiplicity="0..1" />
           <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="*" />
           <ReferentialConstraint>
@@ -641,6 +672,18 @@
             </Principal>
             <Dependent Role="Авторизация">
               <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Недвижимость_tip_zhilya">
+          <End Role="tip_zhilya" Type="Self.tip_zhilya" Multiplicity="0..1" />
+          <End Role="Недвижимость" Type="Self.Недвижимость" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tip_zhilya">
+              <PropertyRef Name="id_tip_zhilya" />
+            </Principal>
+            <Dependent Role="Недвижимость">
+              <PropertyRef Name="id_tip_zhilya" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -781,6 +824,7 @@
           <EntitySet Name="pol" EntityType="Self.pol" />
           <EntitySet Name="role" EntityType="Self.role" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tip_zhilya" EntityType="Self.tip_zhilya" />
           <EntitySet Name="Авторизация" EntityType="Self.Авторизация" />
           <EntitySet Name="Договор" EntityType="Self.Договор" />
           <EntitySet Name="Допольнительние_услуги" EntityType="Self.Допольнительние_услуги" />
@@ -799,13 +843,17 @@
             <End Role="pol" EntitySet="pol" />
             <End Role="Клиент" EntitySet="Клиент" />
           </AssociationSet>
-          <AssociationSet Name="FK_Сотрудник_pol" Association="Self.FK_Сотрудник_pol">
+          <AssociationSet Name="FK_Сотрудник_pol1" Association="Self.FK_Сотрудник_pol1">
             <End Role="pol" EntitySet="pol" />
             <End Role="Сотрудник" EntitySet="Сотрудник" />
           </AssociationSet>
           <AssociationSet Name="FK_Авторизация_role" Association="Self.FK_Авторизация_role">
             <End Role="role" EntitySet="role" />
             <End Role="Авторизация" EntitySet="Авторизация" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Недвижимость_tip_zhilya" Association="Self.FK_Недвижимость_tip_zhilya">
+            <End Role="tip_zhilya" EntitySet="tip_zhilya" />
+            <End Role="Недвижимость" EntitySet="Недвижимость" />
           </AssociationSet>
           <AssociationSet Name="FK_Клиент_Авторизация" Association="Self.FK_Клиент_Авторизация">
             <End Role="Авторизация" EntitySet="Авторизация" />
@@ -893,6 +941,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tip_zhilya">
+            <EntityTypeMapping TypeName="Model.tip_zhilya">
+              <MappingFragment StoreEntitySet="tip_zhilya">
+                <ScalarProperty Name="id_tip_zhilya" ColumnName="id_tip_zhilya" />
+                <ScalarProperty Name="tip_zhilya1" ColumnName="tip_zhilya" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Авторизация">
             <EntityTypeMapping TypeName="Model.Авторизация">
               <MappingFragment StoreEntitySet="Авторизация">
@@ -956,13 +1012,12 @@
               <MappingFragment StoreEntitySet="Недвижимость">
                 <ScalarProperty Name="Id_Недвижимости" ColumnName="Id Недвижимости" />
                 <ScalarProperty Name="Id_Клиент" ColumnName="Id Клиент" />
+                <ScalarProperty Name="id_tip_zhilya" ColumnName="id_tip_zhilya" />
                 <ScalarProperty Name="Стоимость" ColumnName="Стоимость" />
                 <ScalarProperty Name="Адресс" ColumnName="Адресс" />
                 <ScalarProperty Name="Этаж" ColumnName="Этаж" />
                 <ScalarProperty Name="Номер_квартиры" ColumnName="Номер квартиры" />
-                <ScalarProperty Name="C_Тип_недвижимости" ColumnName="[Тип недвижимости" />
                 <ScalarProperty Name="Общая_площадь" ColumnName="Общая площадь" />
-                <ScalarProperty Name="Тип_жилья" ColumnName="Тип жилья" />
                 <ScalarProperty Name="Высота_потолков" ColumnName="Высота потолков" />
                 <ScalarProperty Name="Вид_из_окна" ColumnName="Вид из окна" />
                 <ScalarProperty Name="Количество_ливтов" ColumnName="Количество ливтов" />

@@ -29,6 +29,7 @@ namespace WpfApp1.Models
         public virtual DbSet<pol> pol { get; set; }
         public virtual DbSet<role> role { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<tip_zhilya> tip_zhilya { get; set; }
         public virtual DbSet<Авторизация> Авторизация { get; set; }
         public virtual DbSet<Договор> Договор { get; set; }
         public virtual DbSet<Допольнительние_услуги> Допольнительние_услуги { get; set; }
