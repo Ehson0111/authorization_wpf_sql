@@ -17,7 +17,7 @@ namespace WpfApp1.Pages
 
 
         public EditEmployeeForm(int employeeId)
-        {
+        {//en
             InitializeComponent();
             _employeeId = employeeId;
             db = new Пр4_Агентсво_недвижимостиEntities();
