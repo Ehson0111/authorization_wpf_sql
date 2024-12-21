@@ -19,22 +19,25 @@ namespace WpfApp1.Pages
             InitializeComponent();
             db = new Пр4_Агентсво_недвижимостиEntities();
 
-            try
-            {
-                var authorization = db.Авторизация;
-                var client = db.Клиент;
+            var authorization = db.Авторизация.ToList();
+            var client = db.Клиент.ToList();
+            var user1=user.Клиент.First();
+            var quer = from a in authorization
+                       join c in client on a.Id_Авторизация equals c.id_Авторизация
+                       where a.Id_Авторизация == user.Id_Авторизация
+                       select new { c.Имя, c.Фамилия };
 
-                var quer = from a in authorization
-                           join c in client on a.Id_Авторизация equals c.id_Авторизация
-                           where a.Id_Авторизация == user.Id_Авторизация
-                           select new { c.Имя, c.Фамилия };
-                time(quer.First());
-            }
-            catch (Exception)
-            {
-                Text1.Content = "";
+            ////var result = quer.First(); // Используем FirstOrDefault()
+            //if (result != null)
+            //{
+            //    time(result); // Передаем результат в метод time, только если он не null
+            //}
+            //else
+            //{
+            //    // Обработка случая, когда результат пуст
+            
+            //}
 
-            }
 
             var items = db.Недвижимость.ToList();
 
@@ -54,32 +57,34 @@ namespace WpfApp1.Pages
 
             // Обновляем текст Label
             lblCount.Content = $"{displayedCount} из {totalCount}";
+            time(user1);
         }
 
-        private void time(dynamic query)
+
+        private void time(Клиент user)
         {
 
             DateTime currentTime = DateTime.Now;
-            string text = " ";
+            string text = "";
 
             string s = "";
             if (currentTime.Hour >= 10 && currentTime.Hour <= 12)
             {
                 s = "утро";
-                text = $"Доброе {s} !, {query.Имя} {query.Фамилия} ";
+                text = $"Доброе {s} !, {user.Имя} {user.Фамилия} ";
             }
             else if (currentTime.Hour >= 12 && currentTime.Hour <= 17)
             {
                 s = "день";
-                text = $"Добрый {s} !, {query.Имя} {query.Фамилия} ";
+                text = $"Добрый {s} !, {user.Имя} {user.Фамилия} ";
             }
             else if (currentTime.Hour >= 17 && currentTime.Hour <= 19)
             {
                 s = "вечер ";
-                text = $"Добрый {s} !, {query.Имя} {query.Фамилия} ";
+                text = $"Добрый {s} !, {user.Имя} {user.Фамилия} ";
             }
 
-            Text1.Content = text;
+            text1.Content = text;
         }
 
         private void cmbSorting_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -87,33 +92,87 @@ namespace WpfApp1.Pages
             db = new Пр4_Агентсво_недвижимостиEntities();
 
             var items = db.Недвижимость.ToList();
- 
-            if (LViewProduct==null)
+            var display = db.Недвижимость.ToList();
+
+            if (LViewProduct == null)
             {
                 return;
             }
             switch (cmbSorting.SelectedIndex)
             {
                 case 0:
-                    LViewProduct.ItemsSource = items;
+                  display = items;
                     break;
                 case 1:
-                    LViewProduct.ItemsSource = items.OrderBy(x => x.Стоимость).ToList();
+                  display= items.OrderBy(x => x.Стоимость).ToList();
                     break;
                 case 2:
-                    LViewProduct.ItemsSource = items.OrderByDescending(x => x.Стоимость).ToList();
+                    display = items.OrderByDescending(x => x.Стоимость).ToList();
                     break;
-               
+
             }
+            LViewProduct.ItemsSource = display;
+
+
+            lblCount.Content = $"{display.Count()} из {items.Count()}";
             //   LViewProduct.Items.Refresh();
 
             // Пример с учетом поиска
-        
+
         }
 
         private void LViewProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void cmbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            db = new Пр4_Агентсво_недвижимостиEntities();
+
+            var items = db.Недвижимость.ToList();
+            var display = db.Недвижимость.ToList();
+
+            if (LViewProduct == null)
+            {
+                return;
+            }
+
+
+            switch (cmbFilter.SelectedIndex)
+            {
+                case 0:
+                    display = items;
+                    break;
+                case 1:
+                    display = items.Where(x => double.TryParse(x.Общая_площадь, out double s) && s < 50).ToList();
+
+                    break;
+                case 2:
+                    display = items.Where(x => double.TryParse(x.Общая_площадь, out double s) && s > 50).ToList();
+                    break;
+
+            }
+            LViewProduct.ItemsSource = display;
+
+
+            lblCount.Content = $"{display.Count()} из {items.Count()}";
+
+            //count();
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            db = new Пр4_Агентсво_недвижимостиEntities();
+
+            var items = db.Недвижимость.ToList();
+
+            string searchText = txtSearch.Text.ToLower();
+            var filteredItems = items.Where(x => x.Адресс.ToLower().Contains(searchText)).ToList();
+
+            LViewProduct.ItemsSource = filteredItems;
+
+            lblCount.Content = $"{filteredItems.Count()} из {items.Count()}";
         }
     }
 }

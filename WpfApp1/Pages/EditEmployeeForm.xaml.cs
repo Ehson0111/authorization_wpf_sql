@@ -21,9 +21,9 @@ namespace WpfApp1.Pages
             InitializeComponent();
             _employeeId = employeeId;
             db = new Пр4_Агентсво_недвижимостиEntities();
-
             // Загрузка данных сотрудника
             var employee = db.Сотрудник.Find(employeeId);
+            
             if (employee == null)
             {
                 MessageBox.Show("Сотрудник не найден!");
@@ -53,10 +53,7 @@ namespace WpfApp1.Pages
 
             cbpol.SelectedValue = employee.id_pol;
 
-
-
-            // Загрузка данных авторизации
-            var auth = db.Авторизация.Where(a => a.Id_Авторизация == employee.id_Авторизация).FirstOrDefault();
+            var auth = employee.Авторизация;//db.Авторизация.Where(a => a.Id_Авторизация == employee.id_Авторизация).FirstOrDefault();
             if (auth != null)
             {
                 txtlogin.Text = auth.login;
@@ -66,6 +63,8 @@ namespace WpfApp1.Pages
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+
+
             var employee = db.Сотрудник.Find(_employeeId);
             if (employee == null)
             {
@@ -81,14 +80,12 @@ namespace WpfApp1.Pages
             employee.Зарплата = Convert.ToDecimal(txtZarplata.Text);
             employee.id_dolzhnost = (int?)cbDolzhnost.SelectedValue;
             employee.id_pol = (int?)cbpol.SelectedValue;
-            //employee.Авторизация.password=Tb
+            employee.Дата_рождение = dpBirthday.Text;
             var auth = db.Авторизация.Where(a => a.Id_Авторизация == employee.id_Авторизация).FirstOrDefault();
 
             auth.login = txtlogin.Text;
             auth.password = hash.HashPassword1(pbPassword.Password);
 
-            // Обновление данных авторизации
-            // Сохранение изменений
             try
             {
                 db.SaveChanges();
@@ -129,7 +126,7 @@ namespace WpfApp1.Pages
                 Имя = txtFirstName.Text,
                 Отчество = txtMiddleName.Text,
                 Контактные_данные = txtContactDetails.Text,
-                id_dolzhnost = (int?)cbDolzhnost.SelectedValue,
+                id_dolzhnost = (int)cbDolzhnost.SelectedValue,
                 Дата_рождение = dpBirthday.Text,
                 Зарплата = Convert.ToDecimal(txtZarplata.Text),
                 id_pol = (int)cbpol.SelectedValue,

@@ -91,11 +91,11 @@ namespace WpfApp1.Pages
 
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
-           /* if (!IsWorkingHours())
-            {
-                MessageBox.Show("Доступ запрещен. Рабочее время: с 10:00 до 19:00.");
-                return;
-            }*/
+            //if (!IsWorkingHours())
+            //{
+            //    MessageBox.Show("Доступ запрещен. Рабочее время: с 10:00 до 19:00.");
+            //    return;
+            //}
 
             click += 1;
             string login = tbLogin.Text.Trim();
