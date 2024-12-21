@@ -39,7 +39,8 @@ namespace WpfApp1.Pages
         private void txt(Сотрудник employee)
         {
             //cmbSorting
-    
+            //  DataContext = employee;
+
             txtFirstName.Text = employee.Имя;
             txtLastName.Text = employee.Фамилия;
             txtMiddleName.Text = employee.Отчество;

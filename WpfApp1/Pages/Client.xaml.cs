@@ -158,7 +158,6 @@ namespace WpfApp1.Pages
 
             lblCount.Content = $"{display.Count()} из {items.Count()}";
 
-            //count();
         }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
