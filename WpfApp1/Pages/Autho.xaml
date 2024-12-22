@@ -28,7 +28,7 @@
             <TextBlock x:Name="tbTimer"/>
             <StackPanel Orientation="Horizontal" Height="80" HorizontalAlignment="Center">
                 <Button x:Name="btnEnterGuest" Margin="5,15,5,5" Content="Войти как гость" Click="btnEnterGuest_Click" Cursor="Hand"/>
-                <Button x:Name="btnEnter" Margin="5,15,5,5" Content="Войти" Click="btnEnter_Click"/>
+                <Button x:Name="btnEnter" Margin="5,15,5,5" Content="Войти" Click="BtnEnter_Click"/>
             </StackPanel>
         </StackPanel>
 
