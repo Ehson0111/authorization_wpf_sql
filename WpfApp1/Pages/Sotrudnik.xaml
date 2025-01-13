@@ -12,9 +12,11 @@
             <ColumnDefinition Width="17*"/>
             <ColumnDefinition Width="143*"/>
         </Grid.ColumnDefinitions>
-        --><!-- Приветствие -->
+        -->
+<!-- Приветствие -->
 
-        <!-- DataGrid для отображения сотрудников --><!--
+<!-- DataGrid для отображения сотрудников -->
+<!--
         <DataGrid x:Name="employeesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
                   IsReadOnly="True" MouseDoubleClick="OnMouseDoubleClick" Grid.ColumnSpan="2">
             <DataGrid.Columns>
@@ -26,9 +28,11 @@
             </DataGrid.Columns>
         </DataGrid>
         
-        --><!--<Label HorizontalAlignment="Left" Margin="49,-57,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+        -->
+<!--<Label HorizontalAlignment="Left" Margin="49,-57,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <Label x:Name="Text1" Content="Label" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="16"/>
-        </Label>--><!--
+        </Label>-->
+<!--
     </Grid>
 </Page>-->
 <Page x:Class="WpfApp1.Pages.Sotrudnik"
@@ -42,8 +46,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="17*"/>
-            <ColumnDefinition Width="143*"/>
+            <ColumnDefinition Width="361*"/>
+            <ColumnDefinition Width="439*"/>
         </Grid.ColumnDefinitions>
 
         <!-- ListView для отображения сотрудников в виде карточек -->
@@ -55,7 +59,7 @@
                                IsItemsHost="True" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
-            
+
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="5" Padding="10" Width="200">
@@ -72,6 +76,9 @@
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
+
         </ListView>
+         <Button x:Name="adduser" Content="Добавить" Margin="293,378,26,32" Grid.Column="1" Click="adduser_Click"/>
     </Grid>
+    
 </Page>

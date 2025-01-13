@@ -37,38 +37,43 @@
 
         <!-- Поле для отчества -->
         <Label Grid.Row="2" Grid.Column="0" Content="Отчество:" VerticalAlignment="Center" Foreground="#FF1D869A"/>
-        <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtMiddleName" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Имя}" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
 
         <!-- Поле для контактных данных -->
         <Label Grid.Row="3" Grid.Column="0" Content="Контактные данные:" VerticalAlignment="Center" Foreground="#FF1D869A"/>
-        <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtContactDetails" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Контактные_данные }"  Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
 
         <!-- Поле для должности -->
         <Label Grid.Row="4" Grid.Column="0" Content="Должность:" VerticalAlignment="Center" Foreground="#FF1D869A"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cbDolzhnost" DisplayMemberPath="nazvanie" SelectedValuePath="id_dolzhnost" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
+        <!--<ComboBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=dolzhnost.nazvanie}"  x:Name="cbDolzhnost" DisplayMemberPath="nazvanie" SelectedValuePath="id_dolzhnost" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>-->
+        <ComboBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=dolzhnost.nazvanie}"    x:Name="cbDolzhnost" DisplayMemberPath="nazvanie" SelectedValuePath="id_dolzhnost" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
 
         <!-- Поле для логина и пароля -->
         <Label Grid.Row="5" Grid.Column="0" Content="Логин и пароль:" VerticalAlignment="Center" Foreground="#FF1D869A"/>
         <Grid Grid.Row="5" Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="39*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="28*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" x:Name="txtlogin" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"  />
-            <PasswordBox Grid.Column="1" x:Name="pbPassword" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" />
+            <TextBox Grid.Column="0" Text="{Binding  Path=Авторизация.login  }" Margin="5,5,5,5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"  />
+            <PasswordBox Grid.Column="1" x:Name="pbPassword" Margin="5,5,5,5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Grid.ColumnSpan="2" />
         </Grid>
 
         <!-- Поле для зарплаты -->
         <Label Grid.Row="6" Grid.Column="0" Content="Зарплата:" VerticalAlignment="Center" Foreground="#FF1D869A"/>
-        <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtZarplata" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
+        <!--<TextBox Grid.Row="6" Grid.Column="1" x:Name="txtZarplata" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>-->
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Зарплата}" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
 
         <!-- Поле для даты рождения -->
         <Label Grid.Row="7" Grid.Column="0" Content="Дата рождения:" VerticalAlignment="Center" Foreground="#FF1D869A"/>
-        <DatePicker Grid.Row="7" Grid.Column="1" x:Name="dpBirthday" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
+        <!--<DatePicker Grid.Row="7" Grid.Column="1" x:Name="dpBirthday" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>-->
+        <DatePicker Grid.Row="7" Grid.Column="1"  Text="{Binding Дата_рождение}"  Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
 
         <!-- Поле для пола -->
         <Label Grid.Row="8" Grid.Column="0" Content="Пол:" VerticalAlignment="Center" Foreground="#FF1D869A"/>
-        <ComboBox Grid.Row="8" Grid.Column="1" x:Name="cbpol" DisplayMemberPath="pol1" SelectedValuePath="id_pol" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
+        <!--<ComboBox Grid.Row="8" Grid.Column="1" x:Name="cbpol" DisplayMemberPath="pol1" SelectedValuePath="id_pol" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>-->
+        <ComboBox Grid.Row="8" Grid.Column="1" Text="{Binding Path=pol.pol1}"    DisplayMemberPath="pol1" SelectedValuePath="id_pol" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
 
         <!-- Изображение -->
         <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" 

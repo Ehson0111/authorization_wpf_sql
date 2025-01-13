@@ -99,5 +99,13 @@ namespace WpfApp1.Pages
             }).ToList();
             employeesDataGrid.ItemsSource = updatedEmployees;
         }
+
+
+        private void adduser_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new EditEmployeeForm(5));
+
+
+        }
     }
 }
