@@ -11,10 +11,11 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="220*"/>
-            <ColumnDefinition Width="200*"/>
-            <ColumnDefinition Width="200*"/>
-            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="82*"/>
+            <ColumnDefinition Width="169*"/>
+            <ColumnDefinition Width="229*"/>
+            <ColumnDefinition Width="229*"/>
+            <ColumnDefinition Width="91*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -23,15 +24,19 @@
             <RowDefinition Height="60*"/>
         </Grid.RowDefinitions>
 
-        <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0"/>
+        <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" TextChanged="txtSearch_TextChanged" Grid.ColumnSpan="2"/>
 
-        <ComboBox   Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5,0,5,0" SelectionChanged="cmbSorting_SelectionChanged">
-            <ComboBoxItem>Без сортировать</ComboBoxItem>
+        <ComboBox   Name="cmbSorting" Grid.Row="1" Grid.Column="2" SelectedIndex="0" VerticalAlignment="Center" Margin="5,0,5,0" SelectionChanged="cmbSorting_SelectionChanged">
+            <ComboBoxItem>Без cортировки</ComboBoxItem>
             <ComboBoxItem>Возрастиание</ComboBoxItem>
             <ComboBoxItem>Убывание</ComboBoxItem>
         </ComboBox>
-        <ComboBox Name="cmbFilter" Grid.Row="1" Grid.Column="2" SelectedIndex="0"  Margin="5,0,5,0" VerticalAlignment="Center" />
-        <ListView Name="LViewProduct" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Margin="5,5,5,10" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.RowSpan="2" SelectionChanged="LViewProduct_SelectionChanged">
+        <ComboBox Name="cmbFilter" Grid.Row="1" Grid.Column="3" SelectedIndex="0"  Margin="5,0,5,0" VerticalAlignment="Center" SelectionChanged="cmbFilter_SelectionChanged" >
+            <ComboBoxItem>Все</ComboBoxItem>
+            <ComboBoxItem>0-50 площадь</ComboBoxItem>
+            <ComboBoxItem>50-100 площадь</ComboBoxItem>
+        </ComboBox>
+        <ListView Name="LViewProduct" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="3" Margin="5,22,5,10" d:ItemsSource="{d:SampleData ItemCount=1}" SelectionChanged="LViewProduct_SelectionChanged">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -72,8 +77,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Label x:Name="Text1" Content="Label" HorizontalAlignment="Left" Margin="45,-10,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblCount" Grid.Column="3" Content="Label" HorizontalAlignment="Left" Margin="24,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
+        <Label x:Name="text1" Content="Label" HorizontalAlignment="Left" Margin="56,0,0,46" VerticalAlignment="Bottom"   Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+        <Label x:Name="lblCount" Grid.Column="4" Content="Label" HorizontalAlignment="Left" Margin="24,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
 
     </Grid>
 </Page>

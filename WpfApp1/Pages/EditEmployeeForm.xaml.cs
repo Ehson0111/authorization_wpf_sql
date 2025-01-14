@@ -17,13 +17,13 @@ namespace WpfApp1.Pages
 
 
         public EditEmployeeForm(int employeeId)
-        {
+        {//en
             InitializeComponent();
             _employeeId = employeeId;
             db = new Пр4_Агентсво_недвижимостиEntities();
-
             // Загрузка данных сотрудника
             var employee = db.Сотрудник.Find(employeeId);
+            
             if (employee == null)
             {
                 MessageBox.Show("Сотрудник не найден!");
@@ -32,40 +32,40 @@ namespace WpfApp1.Pages
 
             txt(employee);
 
-            cbDolzhnost.ItemsSource = db.dolzhnost.ToList();
-            cbpol.ItemsSource = db.pol.ToList();
+            //cbDolzhnost.ItemsSource = db.dolzhnost.ToList();
+            //cbpol.ItemsSource = db.pol.ToList();
         }
 
         private void txt(Сотрудник employee)
         {
             //cmbSorting
-    
-            txtFirstName.Text = employee.Имя;
-            txtLastName.Text = employee.Фамилия;
-            txtMiddleName.Text = employee.Отчество;
-            txtContactDetails.Text = employee.Контактные_данные;
+               DataContext = employee; 
 
-            cbDolzhnost.SelectedValue = employee.id_dolzhnost;
+            //txtFirstName.Text = employee.Имя;
+            //txtLastName.Text = employee.Фамилия;
+            //txtMiddleName.Text = employee.Отчество;
+            //txtContactDetails.Text = employee.Контактные_данные;
 
-            txtZarplata.Text = employee.Зарплата.ToString();
+            //cbDolzhnost.SelectedValue = employee.id_dolzhnost;
 
-            dpBirthday.Text = employee.Дата_рождение;
+            //txtZarplata.Text = employee.Зарплата.ToString();
 
-            cbpol.SelectedValue = employee.id_pol;
+            //dpBirthday.Text = employee.Дата_рождение;
 
+            //cbpol.SelectedValue = employee.id_pol;
 
-
-            // Загрузка данных авторизации
-            var auth = db.Авторизация.Where(a => a.Id_Авторизация == employee.id_Авторизация).FirstOrDefault();
+            var auth = employee.Авторизация;//db.Авторизация.Where(a => a.Id_Авторизация == employee.id_Авторизация).FirstOrDefault();
             if (auth != null)
             {
-                txtlogin.Text = auth.login;
+                //txtlogin.Text = auth.login;
                 pbPassword.Password = auth.password;
             }
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+
+
             var employee = db.Сотрудник.Find(_employeeId);
             if (employee == null)
             {
@@ -76,19 +76,17 @@ namespace WpfApp1.Pages
             // Обновление данных сотрудника
             employee.Имя = txtFirstName.Text;
             employee.Фамилия = txtLastName.Text;
-            employee.Отчество = txtMiddleName.Text;
-            employee.Контактные_данные = txtContactDetails.Text;
-            employee.Зарплата = Convert.ToDecimal(txtZarplata.Text);
-            employee.id_dolzhnost = (int?)cbDolzhnost.SelectedValue;
-            employee.id_pol = (int?)cbpol.SelectedValue;
-            //employee.Авторизация.password=Tb
+            //employee.Отчество = txtMiddleName.Text;
+            //employee.Контактные_данные = txtContactDetails.Text;
+            //employee.Зарплата = Convert.ToDecimal(txtZarplata.Text);
+            //employee.id_dolzhnost = (int?)cbDolzhnost.SelectedValue;
+            //employee.id_pol = (int?)cbpol.SelectedValue;
+            //employee.Дата_рождение = dpBirthday.Text;
             var auth = db.Авторизация.Where(a => a.Id_Авторизация == employee.id_Авторизация).FirstOrDefault();
 
-            auth.login = txtlogin.Text;
+            //auth.login = txtlogin.Text;
             auth.password = hash.HashPassword1(pbPassword.Password);
 
-            // Обновление данных авторизации
-            // Сохранение изменений
             try
             {
                 db.SaveChanges();
@@ -110,36 +108,35 @@ namespace WpfApp1.Pages
         {
             txtFirstName.Text = "";
             txtLastName.Text = "";
-            txtMiddleName.Text = "";
-            txtContactDetails.Text = "";
-            txtlogin.Text = "";
+            //txtMiddleName.Text = "";
+            //txtContactDetails.Text = "";
+            //txtlogin.Text = "";
             pbPassword.Password = "";
-            txtZarplata.Text = 0.ToString();
-            dpBirthday.Text = "";
+            //txtZarplata.Text = 0.ToString();
+            //dpBirthday.Text = "";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
             string parol = hash.HashPassword1(pbPassword.Password);
-            string login1 = txtlogin.Text;
+            //string login1 = txtlogin.Text;
             Сотрудник newSotrudnik = new Сотрудник
             {
                 Фамилия = txtLastName.Text,
                 Имя = txtFirstName.Text,
-                Отчество = txtMiddleName.Text,
-                Контактные_данные = txtContactDetails.Text,
-                id_dolzhnost = (int?)cbDolzhnost.SelectedValue,
-                Дата_рождение = dpBirthday.Text,
-                Зарплата = Convert.ToDecimal(txtZarplata.Text),
-                id_pol = (int)cbpol.SelectedValue,
-
+                //Отчество = txtMiddleName.Text,
+                //Контактные_данные = txtContactDetails.Text,
+                //id_dolzhnost = (int)cbDolzhnost.SelectedValue,
+                //Дата_рождение = dpBirthday.Text,
+                //Зарплата = Convert.ToDecimal(txtZarplata.Text),
+                //id_pol = (int)cbpol.SelectedValue,
             };
 
 
             Авторизация auth = new Авторизация
             {
-                login = login1,
+                //login = login1,
                 password = parol,
                 id_role = 2,
 

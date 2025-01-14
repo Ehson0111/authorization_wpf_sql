@@ -10,33 +10,24 @@ namespace WpfApp1.Pages
     public partial class Sotrudnik : Page
     {
         private static Пр4_Агентсво_недвижимостиEntities db;
-
         public Sotrudnik(Авторизация user, string role)
         {
             InitializeComponent();
             db = new Пр4_Агентсво_недвижимостиEntities();
-
+            
             // Приветствие
-            var authorization = db.Авторизация;
-            var sotrudnik = db.Сотрудник;
+            var authorization = db.Авторизация.ToList();
+            var sotrudnik = db.Сотрудник.ToList();
 
-            var userQuery = from a in authorization
-                            join c in sotrudnik on a.Id_Авторизация equals c.id_Авторизация
-                            where a.Id_Авторизация == user.Id_Авторизация
-                            select new { c.Имя, c.Фамилия, c.Отчество, c.Контактные_данные };
-   //         var userInfo = userQuery.First();
-     //       Text1.Content = GenerateGreeting(userInfo.Имя, userInfo.Фамилия);
-            //if (userQuery == null)
-            //{
-            //    if (userQuery.Any())
-            //    {
-            //        var userInfo = userQuery.First();
-            //        Text1.Content = GenerateGreeting(userInfo.Имя, userInfo.Фамилия);
-            //    }
+            //var userQuery = from a in authorization
+            //                join c in sotrudnik on a.Id_Авторизация equals c.id_Авторизация
+            //                where a.Id_Авторизация == user.Id_Авторизация
+            //                select new { c.Имя, c.Фамилия, c.Отчество, c.Контактные_данные };
+            ////var userInfo = userQuery.First();
+            //var user1 = user.Сотрудник.First();
 
-            //}
-
-            // Получение сотрудников для DataGrid
+            //time(user1);
+            
             var employees = db.Сотрудник.Select(c => new
             {
                 c.Id_Сотрудник, // Добавляем ID для идентификации
@@ -51,21 +42,30 @@ namespace WpfApp1.Pages
 
         }
 
-        private string GenerateGreeting(string firstName, string lastName)
+        private void time(Сотрудник user)
         {
+
             DateTime currentTime = DateTime.Now;
-            string timeOfDay;
+            string text = "";
 
-            if (currentTime.Hour >= 10 && currentTime.Hour < 12)
-                timeOfDay = "утро";
-            else if (currentTime.Hour >= 12 && currentTime.Hour < 17)
-                timeOfDay = "день";
-            else if (currentTime.Hour >= 17 && currentTime.Hour < 19)
-                timeOfDay = "вечер";
-            else
-                timeOfDay = "ночь";
+            string s = "";
+            if (currentTime.Hour >= 10 && currentTime.Hour <= 12)
+            {
+                s = "утро";
+                text = $"Доброе {s} !, {user.Имя} {user.Фамилия} ";
+            }
+            else if (currentTime.Hour >= 12 && currentTime.Hour <= 17)
+            {
+                s = "день";
+                text = $"Добрый {s} !, {user.Имя} {user.Фамилия} ";
+            }
+            else if (currentTime.Hour >= 17 && currentTime.Hour <= 26)
+            {
+                s = "вечер ";
+                text = $"Добрый {s} !, {user.Имя} {user.Фамилия} ";
+            }
 
-            return $"Доброе {timeOfDay}!, {firstName} {lastName}";
+          // Text1.Content = text;
         }
 
         private void OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -98,6 +98,14 @@ namespace WpfApp1.Pages
                 nazvanie = c.dolzhnost.nazvanie // Добавляем должность
             }).ToList();
             employeesDataGrid.ItemsSource = updatedEmployees;
+        }
+
+
+        private void adduser_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new EditEmployeeForm(5));
+
+
         }
     }
 }
